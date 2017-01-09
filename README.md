@@ -5,13 +5,13 @@ osu! calc is a performance point(PP) calculator for the game osu! This program o
 
 This program is written in python and requires version 2.7. There are several supported arguments.
 
-* -l <\link> (If API key available)
-* -acc <% acc>
-* -c100 <# of 100s>
-* -c50 <# of 50s>
-* -m <# of misses>
-* -sv <\score version 1 or 2>
-* -mods <\string of mods>
+* -l `<link>` (If API key available)
+* -acc `<% acc>`
+* -c100 `<# of 100s>`
+* -c50 `<# of 50s>`
+* -m `<# of misses>`
+* -sv `<score version 1 or 2>`
+* -mods `<string of mods>`
 
 Examples:
 ```python
