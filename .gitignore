@@ -1,2 +1,3 @@
 keys.cfg
 *.pyc
+.DS_Store
