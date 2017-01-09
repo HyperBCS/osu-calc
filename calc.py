@@ -42,15 +42,17 @@ try:
     key = config._sections["osu"]['api_key']
 except:
     raise Exception("Invalid config")
-
 try:
 	file_name = args.file
 	if feature:
+		if key == "":
+			print("Please enter an API key to use this feature.")
+			raise()
 		file = urllib.urlopen(b_info.main(file_name, key))
 	else:
 		file = open(file_name)
 except:
-	print "ERROR: "+file_name + " not a valid beatmap or invalid API key"
+	print "ERROR: "+file_name + " not a valid beatmap or API key is incorrect"
 	sys.exit(1)
 map = Beatmap(file)
 if combo == 0 or combo > map.max_combo:
