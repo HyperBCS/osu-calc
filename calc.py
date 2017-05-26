@@ -1,10 +1,10 @@
 import diff_calc
-import urllib
+import requests
 import pp_calc
 import sys
 import argparse
 import b_info
-import ConfigParser
+import configparser
 from beatmap import Beatmap
 parser = argparse.ArgumentParser()
 feature = False
@@ -37,7 +37,7 @@ file_name = ""
 
 try:
     f = open('keys.cfg');
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.readfp(f)
     key = config._sections["osu"]['api_key']
 except:
@@ -48,11 +48,11 @@ try:
 		if key == "":
 			print("Please enter an API key to use this feature.")
 			raise()
-		file = urllib.urlopen(b_info.main(file_name, key))
+		file = requests.get(b_info.main(file_name, key)).text.splitlines()
 	else:
 		file = open(file_name)
 except:
-	print "ERROR: "+file_name + " not a valid beatmap or API key is incorrect"
+	print("ERROR: "+file_name + " not a valid beatmap or API key is incorrect")
 	sys.exit(1)
 map = Beatmap(file)
 if combo == 0 or combo > map.max_combo:
@@ -137,11 +137,12 @@ title = map.artist + " - "+map.title + "["+map.version+"]"
 if mod_string != "":
 	title += "+" + mod_string
 title += " (" + map.creator + ")"
-print "Map: " + title
-print "Stars: "+str(round(diff[2], 2))
-print "Acc: "+str(round(pp.acc_percent, 2)) + "%"
+print("Map: " + title)
+print("AR: " + str(round(map.ar, 2)) + " CS: " + str(map.cs) + " OD: " + str(map.od))
+print("Stars: "+str(round(diff[2], 2)))
+print("Acc: "+str(round(pp.acc_percent, 2)) + "%")
 comb_s = "Combo: "+str(int(combo)) + "/" + str(int(map.max_combo))
 if misses != 0:
 	comb_s += " with " + str(misses) + " misses"
-print comb_s
-print "Performance: "+str(round(pp.pp, 2)) + "PP"
+print(comb_s)
+print("Performance: "+str(round(pp.pp, 2)) + "PP")

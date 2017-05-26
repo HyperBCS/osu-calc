@@ -188,8 +188,8 @@ class Beatmap:
 					self.num_spinners += 1
 					h_type = 3
 				else:
-					print "HELP "+h_type
-					print temp_tp
+					print("HELP "+h_type)
+					print(temp_tp)
 				self.num_objects += 1
 				self.max_combo += 1
 				self.objects.append(hit_object(pos,time,h_type,end_time,slider))
@@ -217,16 +217,15 @@ class Beatmap:
 					tp_num += 1
 				if "[TimingPoints]" in line:
 					tp_sec = True
-				if tp_sec and (line == "\n" or line == "\r\n"):
+				if tp_sec and (line == "\n" or line == "\r\n" or line == ""):
 					tp_sec = False
 			#print "Circles: "+str(self.num_circles)+" Sliders: "+str(self.num_sliders)+" Spinners: "+str(self.num_spinners)
 			#print "Max combo: "+str(self.max_combo)
-			self.searchfile.close()
 			if valid != True:
-				print "ERROR: Unsupported gamemode"
+				print("ERROR: Unsupported gamemode")
 				raise()
 		except:
-			print "ERROR: Processing beatmap failed"
+			print("ERROR: Processing beatmap failed")
 			sys.exit(1)
 	def apply_mods(self,mods):
 		# Ugly shouldput somewhere else
