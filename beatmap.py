@@ -65,16 +65,16 @@ class Beatmap:
 		# Gathering Metadata
 		def metadata(self,line):
 			if "Title:" in line:
-				self.title = line.split(":")[1].split("\r")[0].split("\n")[0]
+				self.title = line.split("Title:")[1].split("\r")[0].split("\n")[0]
 				#print "Title: "+self.title
 			elif "Artist:" in line:
-				self.artist = line.split(":")[1].split("\r")[0].split("\n")[0]
+				self.artist = line.split("Artist:")[1].split("\r")[0].split("\n")[0]
 				#print "Artist: "+self.artist
 			elif "Creator:" in line:
-				self.creator = line.split(":")[1].split("\r")[0].split("\n")[0]
+				self.creator = line.split("Creator:")[1].split("\r")[0].split("\n")[0]
 				#print "Mapper: "+self.creator
 			elif "Version:" in line:
-				self.version = line.split(":")[1].split("\r")[0].split("\n")[0]
+				self.version = line.split("Version:")[1].split("\r")[0].split("\n")[0]
 				#print "Dfifficulty: "+self.version
 		# Gather difficulty -> remember to check for exceptions
 		def difficulty(self,line):
