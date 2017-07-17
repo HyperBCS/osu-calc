@@ -5,7 +5,6 @@ import sys
 def bm_s(bm,key):
 	url = 'https://osu.ppy.sh/api/get_beatmaps?k='+key+'&'+bm
 	jsonurl = requests.get(url).text
-	print("DONE")
 	#enc = jsonurl.headers.get_content_charset()
 	jstring = jsonurl.strip("[]")
 	new = jstring.split("},")
