@@ -115,7 +115,7 @@ def set_mods(mod, m):
         mod.so = 1
 
 
-def return_values(c100, c50, misses, acc, combo, sv, file_name):
+def return_values(c100, c50, misses, combo, file_name):
     global key
     try:
         if key == "":
@@ -140,25 +140,25 @@ def return_values(c100, c50, misses, acc, combo, sv, file_name):
         pp, aim_value, speed_value, acc_value, fl_bonus, old_fl_bonus = pp_calc.pp_calc(diff[0], diff[1], diff[3],
                                                                                         misses,
                                                                                         c100, c50, mod,
-                                                                                        combo, sv)
+                                                                                        combo)
     else:
         pp = pp_calc.pp_calc_acc(diff[0], diff[1], diff[3], acc, mod, combo, misses, sv)
     title = map.artist + " - " + map.title + "[" + map.version + "]"
     if mod_string != "":
         title += "+" + mod_string
-    title += " (" + map.creator + ")"
-    map = "Map: {}".format(title)
-    difficulty_settings = "AR: {:.2f} CS: {:.2f} OD: {:.2f}".format(map.ar, map.cs, map.od)
-    print("AR: " + str(round(map.ar, 2)) + " CS: " + str(round(map.cs, 2)) + " OD: " + str(round(map.od, 2)))
-    print("Stars: " + str(round(diff[2], 2)))
-    print("Acc: " + str(round(pp.acc_percent, 2)) + "%")
-    comb_s = "Combo: " + str(int(combo)) + "/" + str(int(map.max_combo))
-    if misses != 0:
-        comb_s += " with " + str(misses) + " misses"
-    print(comb_s)
-    print "Aim Value: {:.2f}PP".format(aim_value)
-    print "Speed Value: {:.2f}PP".format(speed_value)
-    print "Acc Value: {:.2f}PP".format(acc_value)
-    print "Flashlight Aim Bonus: {:.5f}x".format(fl_bonus)
-    print "Old Flashlight Aim Bonus: {:.5f}x".format(old_fl_bonus)
-    print("Performance: " + str(round(pp.pp, 2)) + "PP")
+    title += " (" + map.creator + ")\n"
+    map = "Map: {}\n".format(title)
+    difficulty_settings = "AR: {:.2f} CS: {:.2f} OD: {:.2f}\n".format(map.ar, map.cs, map.od)
+    stars = "Stars: {.2f}\n".format(diff[2])
+    acc = "Acc: {.2f}%\n".format(pp.acc_percent)
+    comb_s = "Combo: {}/{}\n".format(combo, map.max_combo)
+    miss_s = "Misses: {}\n".format(misses)
+    aim_vs = "Aim Value: {:.2f}PP\n".format(aim_value)
+    speed_vs = "Speed Value: {:.2f}PP\n".format(speed_value)
+    acc_vs = "Acc Value: {:.2f}PP\n".format(acc_value)
+    fl_bs = "Flashlight Aim Bonus: {:.5f}x\n".format(fl_bonus)
+    old_fl_bs = "Old Flashlight Aim Bonus: {:.5f}x\n".format(old_fl_bonus)
+    pp_s = "Performance: {:.2f}PP".format(pp.pp)
+
+    return (map + difficulty_settings + stars + acc + comb_s + miss_s + aim_vs
+            + speed_vs + acc_vs + fl_bs + old_fl_bs + pp_s)
