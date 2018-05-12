@@ -43,19 +43,7 @@ try:
     key = config._sections["osu"]['api_key']
 except:
     raise Exception("Invalid config")
-try:
-    file_name = args.file
-    if feature:
-        if key == "":
-            print("Please enter an API key to use this feature.")
-            raise ()
-        file = requests.get(b_info.main(file_name, key)).text.splitlines()
-    else:
-        file = open(file_name)
-except:
-    print("ERROR: " + file_name + " not a valid beatmap or API key is incorrect")
-    sys.exit(1)
-map = Beatmap(file)
+
 if combo == 0 or combo > map.max_combo:
     combo = map.max_combo
 
@@ -127,36 +115,50 @@ def set_mods(mod, m):
         mod.so = 1
 
 
-if mod_s != "":
-    mod_s = [mod_s[i:i + 2] for i in range(0, len(mod_s), 2)]
-    for m in mod_s:
-        set_mods(mod, m)
-        mod.update()
+def return_values(c100, c50, misses, acc, combo, sv, file_name):
+    global key
+    try:
+        if key == "":
+            print("Please enter an API key to use this feature.")
+            raise ()
+        file = requests.get(b_info.main(file_name, key)).text.splitlines()
+    except:
+        print("ERROR: " + file_name + " not a valid beatmap or API key is incorrect")
+        sys.exit(1)
+    map = Beatmap(file)
 
-mod_string = mod_str(mod)
-map.apply_mods(mod)
-diff = diff_calc.main(map)
-if acc == 0:
-    pp, aim_value, speed_value, acc_value, fl_bonus, old_fl_bonus = pp_calc.pp_calc(diff[0], diff[1], diff[3], misses,
-                                                                                    c100, c50, mod,
-                                                                                    combo, sv)
-else:
-    pp = pp_calc.pp_calc_acc(diff[0], diff[1], diff[3], acc, mod, combo, misses, sv)
-title = map.artist + " - " + map.title + "[" + map.version + "]"
-if mod_string != "":
-    title += "+" + mod_string
-title += " (" + map.creator + ")"
-print("Map: " + title)
-print("AR: " + str(round(map.ar, 2)) + " CS: " + str(round(map.cs, 2)) + " OD: " + str(round(map.od, 2)))
-print("Stars: " + str(round(diff[2], 2)))
-print("Acc: " + str(round(pp.acc_percent, 2)) + "%")
-comb_s = "Combo: " + str(int(combo)) + "/" + str(int(map.max_combo))
-if misses != 0:
-    comb_s += " with " + str(misses) + " misses"
-print(comb_s)
-print "Aim Value: {:.2f}PP".format(aim_value)
-print "Speed Value: {:.2f}PP".format(speed_value)
-print "Acc Value: {:.2f}PP".format(acc_value)
-print "Flashlight Aim Bonus: {:.5f}x".format(fl_bonus)
-print "Old Flashlight Aim Bonus: {:.5f}x".format(old_fl_bonus)
-print("Performance: " + str(round(pp.pp, 2)) + "PP")
+    if mod_s != "":
+        mod_s = [mod_s[i:i + 2] for i in range(0, len(mod_s), 2)]
+        for m in mod_s:
+            set_mods(mod, m)
+            mod.update()
+
+    mod_string = mod_str(mod)
+    map.apply_mods(mod)
+    diff = diff_calc.main(map)
+    if acc == 0:
+        pp, aim_value, speed_value, acc_value, fl_bonus, old_fl_bonus = pp_calc.pp_calc(diff[0], diff[1], diff[3],
+                                                                                        misses,
+                                                                                        c100, c50, mod,
+                                                                                        combo, sv)
+    else:
+        pp = pp_calc.pp_calc_acc(diff[0], diff[1], diff[3], acc, mod, combo, misses, sv)
+    title = map.artist + " - " + map.title + "[" + map.version + "]"
+    if mod_string != "":
+        title += "+" + mod_string
+    title += " (" + map.creator + ")"
+    map = "Map: {}".format(title)
+    difficulty_settings = "AR: {:.2f} CS: {:.2f} OD: {:.2f}".format(map.ar, map.cs, map.od)
+    print("AR: " + str(round(map.ar, 2)) + " CS: " + str(round(map.cs, 2)) + " OD: " + str(round(map.od, 2)))
+    print("Stars: " + str(round(diff[2], 2)))
+    print("Acc: " + str(round(pp.acc_percent, 2)) + "%")
+    comb_s = "Combo: " + str(int(combo)) + "/" + str(int(map.max_combo))
+    if misses != 0:
+        comb_s += " with " + str(misses) + " misses"
+    print(comb_s)
+    print "Aim Value: {:.2f}PP".format(aim_value)
+    print "Speed Value: {:.2f}PP".format(speed_value)
+    print "Acc Value: {:.2f}PP".format(acc_value)
+    print "Flashlight Aim Bonus: {:.5f}x".format(fl_bonus)
+    print "Old Flashlight Aim Bonus: {:.5f}x".format(old_fl_bonus)
+    print("Performance: " + str(round(pp.pp, 2)) + "PP")
