@@ -85,6 +85,7 @@ class Beatmap:
 				self.cs = float(line.split(":")[1].split("\n")[0])
 				#print "CS: "+str(self.cs)
 			elif "OverallDifficulty:" in line:
+				self.ar = float(line.split(":")[1].split("\n")[0])
 				self.od = float(line.split(":")[1].split("\n")[0])
 				#print "OD: "+str(self.od)
 			elif "ApproachRate:" in line:
