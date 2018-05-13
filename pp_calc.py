@@ -91,7 +91,7 @@ def pp_calc(aim, speed, b, misses, c100, c50, used_mods = mods() ,combo = 0xFFFF
 	aim_value *= ar_bonus
 
 	if used_mods.hd:
-		aim_value *= 1.18
+		aim_value *= 1.03
 
 	if used_mods.fl:
 		aim_value *= 1.45 * length_bonus
@@ -113,6 +113,9 @@ def pp_calc(aim, speed, b, misses, c100, c50, used_mods = mods() ,combo = 0xFFFF
 	speed_value *= acc_bonus
 	speed_value *= od_bonus
 
+	if used_mods.hd:
+		speed_value *= 1.18
+	
 	res.speed_pp = speed_value
 
 	real_acc = 0.0
