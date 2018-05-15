@@ -79,6 +79,8 @@ def mod_str(mod):
 		string += "FL"
 	if mod.so:
 		string += "SO"
+	if mod.td:
+		string += "TD"
 	return string
 
 class mods:
@@ -93,6 +95,7 @@ class mods:
 		self.nc = 0
 		self.fl = 0
 		self.so = 0
+		self.td = 0
 		self.speed_changing = self.dt | self.ht | self.nc
 		self.map_changing = self.hr | self.ez | self.speed_changing
 	def update(self):
@@ -119,6 +122,8 @@ def set_mods(mod, m):
 			mod.fl = 1
 		if m == "SO":
 			mod.so = 1
+		if m == "TD":
+			mod.td = 1
 
 if mod_s != "":
 	mod_s = [mod_s[i:i+2] for i in range(0, len(mod_s), 2)]

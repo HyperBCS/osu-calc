@@ -19,7 +19,8 @@ class Beatmap:
 		self.od = 0
 		self.ar = 0
 		self.sv = 0
-		self.tick_rate = 1;
+		self.tick_rate = 1
+		self.speed = 1
 
 		# Combo
 		self.num_circles = 0
@@ -190,7 +191,6 @@ class Beatmap:
 					h_type = 3
 				else:
 					print("HELP "+h_type)
-					print(temp_tp)
 				self.num_objects += 1
 				self.max_combo += 1
 				self.objects.append(hit_object(pos,time,h_type,end_time,slider))
@@ -251,6 +251,8 @@ class Beatmap:
 		if mods.ht: 
 			speed *= 0.75
 
+		self.speed = speed
+
 		od_multiplier = 1
 
 		if mods.hr:
@@ -298,12 +300,12 @@ class Beatmap:
 			return
 
 		for tp in self.timing_points:
-			tp.time = float(tp.time) / speed
+			tp.time = float(tp.time)
 			if int(tp.inherit) == 0:
-				tp.ms_per_beat = float(tp.ms_per_beat) / speed
+				tp.ms_per_beat = float(tp.ms_per_beat)
 
 
 		for obj in self.objects:
-			obj.time = float(obj.time) / speed
-			obj.end_time = obj.end_time / speed
+			obj.time = float(obj.time)
+			obj.end_time = obj.end_time
 

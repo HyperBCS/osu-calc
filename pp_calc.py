@@ -63,6 +63,9 @@ def pp_calc(aim, speed, b, misses, c100, c50, used_mods = mods() ,combo = 0xFFFF
 	acc = acc_calc(c300,c100,c50,misses)
 	res.acc_percent = acc * 100.0
 
+	if used_mods.td:
+		aim = math.pow(aim, 0.8)
+
 	aim_value = base_strain(aim)
 
 	total_hits_over_2k = total_hits / 2000.0
@@ -91,7 +94,7 @@ def pp_calc(aim, speed, b, misses, c100, c50, used_mods = mods() ,combo = 0xFFFF
 	aim_value *= ar_bonus
 
 	if used_mods.hd:
-		aim_value *= 1.02 + (11 - ar) / 50
+		aim_value *= 1.02 + (11 - ar) / 50.0
 
 	if used_mods.fl:
 		aim_value *= 1.45 * length_bonus

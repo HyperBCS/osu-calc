@@ -38,7 +38,7 @@ def main(file):
 			if(prev == None):
 				return
 			res = 0
-			time_elapsed = int(self.ho.time) - int(prev.ho.time)
+			time_elapsed = (int(self.ho.time) - int(prev.ho.time)) / map.speed
 			decay = math.pow(consts.decay_base[dtype],time_elapsed / 1000.0)
 			scaling = consts.weight_scaling[dtype]
 			if self.ho.h_type == 1 or self.ho.h_type == 2:
@@ -64,7 +64,7 @@ def main(file):
 			else:
 				return 0.0
 	def calculate_difficulty(type, objects):
-		strain_step = 400
+		strain_step = 400 * map.speed
 		prev = None
 		max_strain = 0
 		decay_weight = 0.9
