@@ -36,7 +36,7 @@ feature = args.l
 file_name = ""
 
 try:
-    f = open('keys.cfg');
+    f = open('keys.cfg', encoding="utf8");
     config = configparser.ConfigParser()
     config.readfp(f)
     key = config._sections["osu"]['api_key']
