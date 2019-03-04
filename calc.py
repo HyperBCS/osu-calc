@@ -3,12 +3,11 @@ import requests
 import pp_calc
 import sys
 import argparse
-import b_info
 import configparser
 from beatmap import Beatmap
 parser = argparse.ArgumentParser()
 feature = False
-mod_s = ""
+mod_s = None
 c100 = 0
 c50 = 0
 misses = 0
