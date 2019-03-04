@@ -41,12 +41,14 @@ def main(file):
 			self.jump_distance = 0
 			self.angle = None
 			self.travel_distance = 0
+			# Calculate jump distance for objects
 			if((self.ho.h_type == 1 or self.ho.h_type == 2) and prev != None ):
 				self.jump_distance = math.sqrt(math.pow(self.norm_start[0] - prev.norm_end[0],2) + math.pow(self.norm_start[1] - prev.norm_end[1],2))
+			# Not working, need to figure out how sliders work
 			if(self.ho.h_type == 2):
 				self.comp_slider_pos()
 			if(prev != None and prev.prev != None):
-				
+				# Calculate angle with lastlast last and base object
 				v1 = [prev.prev.norm_start[0] - prev.norm_start[0], prev.prev.norm_start[1] - prev.norm_start[1]]
 				v2 = [self.norm_start[0] - prev.norm_start[0], self.norm_start[1] - prev.norm_start[1]]
 				dot = v1[0]*v2[0] + v1[1]*v2[1]
@@ -67,7 +69,7 @@ def main(file):
 				self.travel_distance = self.ho.slider.length
 
 
-
+		# Calculate aim strain
 		def calculate_aim(self,prev):
 			result = 0
 			strain_time = max(50,self.delta_time)
@@ -81,6 +83,7 @@ def main(file):
 			travel_dist_exp = 0
 			return max(result + jump_dist_exp / max(strain_time, consts.timing_threshold), jump_dist_exp / strain_time)
 
+		# Calculate speed strain
 		def calculate_speed(self,prev):
 			distance = min(consts.single_spacing, self.jump_distance)
 			strain_time = max(50,self.delta_time)
@@ -88,11 +91,8 @@ def main(file):
 			speed_bonus = 1.0
 			if(delta_time < consts.min_speed_bonus):
 				speed_bonus = 1 + math.pow((consts.min_speed_bonus - delta_time) / consts.speed_balancing_factor,2)
-
 			angle_bonus = 1.0
-
 			if(self.angle != None and self.angle < consts.speed_angle_bonus_begin):
-				
 				angle_bonus = 1 + math.pow(math.sin(1.5 * (self.angle - consts.speed_angle_bonus_begin)),2) / 3.57
 				if(self.angle < math.pi / 2):
 					angle_bonus = 1.28

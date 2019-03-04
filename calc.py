@@ -33,26 +33,17 @@ acc = float(args.acc)
 sv = int(args.sv)
 mod_s = args.mods
 feature = args.l
-file_name = ""
+file_name = None
 
-try:
-    f = open('keys.cfg', encoding="utf8");
-    config = configparser.ConfigParser()
-    config.readfp(f)
-    key = config._sections["osu"]['api_key']
-except:
-    pass
+
 try:
 	file_name = args.file
 	if feature:
-		if key == "" or key == None:
-			print("Please enter an API key to use this feature.")
-			raise()
-		file = requests.get(b_info.main(file_name, key)).text.splitlines()
+		file = requests.get(file_name).text.splitlines()
 	else:
 		file = open(file_name)
 except:
-	print("ERROR: "+file_name + " not a valid beatmap or API key is incorrect")
+	print("ERROR: "+file_name + " not a valid beatmap file or URL")
 	sys.exit(1)
 map = Beatmap(file)
 if combo == 0 or combo > map.max_combo:
