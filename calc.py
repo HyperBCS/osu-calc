@@ -41,11 +41,11 @@ try:
     config.readfp(f)
     key = config._sections["osu"]['api_key']
 except:
-    raise Exception("Invalid config")
+    pass
 try:
 	file_name = args.file
 	if feature:
-		if key == "":
+		if key == "" or key == None:
 			print("Please enter an API key to use this feature.")
 			raise()
 		file = requests.get(b_info.main(file_name, key)).text.splitlines()
@@ -144,6 +144,7 @@ if mod_string != "":
 title += " (" + map.creator + ")"
 print("Map: " + title)
 print("AR: " + str(round(map.ar, 2)) + " CS: " + str(round(map.cs,2)) + " OD: " + str(round(map.od,2)))
+print("Aim:", round(diff[0],2), "Speed:",round(diff[1],2))
 print("Stars: "+str(round(diff[2], 2)))
 print("Acc: "+str(round(pp.acc_percent, 2)) + "%")
 comb_s = "Combo: "+str(int(combo)) + "/" + str(int(map.max_combo))

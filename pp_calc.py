@@ -78,26 +78,23 @@ def pp_calc(aim, speed, b, misses, c100, c50, used_mods = mods() ,combo = 0xFFFF
 	aim_value *= length_bonus
 	aim_value *= miss_penalty
 	aim_value *= combo_break
-
 	ar_bonus = 1.0
 
 	if ar > 10.33:
-		ar_bonus += 0.45 * (ar - 10.33)
+		ar_bonus += 0.3 * (ar - 10.33)
 	elif ar < 8:
-		low_ar_bonus = 0.01 * (8 - ar)
+		ar_bonus += 0.01*(8.0 - ar)
 
-		if used_mods.hd:
-			low_ar_bonus *= 2.0
-
-		ar_bonus += low_ar_bonus
+	
 
 	aim_value *= ar_bonus
-
+	hd_bonus = 1.0
 	if used_mods.hd:
-		aim_value *= 1.02 + (11 - ar) / 50.0
+		hd_bonus = 1.0 + 0.04*(12 - ar)
+	aim_value *= hd_bonus
 
 	if used_mods.fl:
-		aim_value *= 1.45 * length_bonus
+		aim_value *= 1.0 + 0.35 * min(1.0,total_hits / 200.0) + ((0.3 * min(1,(total_hits - 200) / 300.0) + ((total_hits - 500) / 1200.0 if total_hits > 500 else 0)) if total_hits > 200 else 0)
 
 	acc_bonus = 0.5 + acc / 2.0
 
@@ -113,11 +110,11 @@ def pp_calc(aim, speed, b, misses, c100, c50, used_mods = mods() ,combo = 0xFFFF
 	speed_value *= length_bonus
 	speed_value *= miss_penalty
 	speed_value *= combo_break
-	speed_value *= acc_bonus
-	speed_value *= od_bonus
-
-	if used_mods.hd:
-		speed_value *= 1.18
+	if(ar > 10.33):
+		speed_value *= ar_bonus
+	speed_value *= hd_bonus
+	speed_value *= 0.02 + acc
+	speed_value *= 0.96 + (math.pow(od, 2) / 1600)
 	
 	res.speed_pp = speed_value
 
@@ -136,7 +133,7 @@ def pp_calc(aim, speed, b, misses, c100, c50, used_mods = mods() ,combo = 0xFFFF
 	acc_value *= min(1.15, math.pow(circles / 1000.0, 0.3))
 
 	if used_mods.hd:
-		acc_value *= 1.02
+		acc_value *= 1.08
 
 	if used_mods.fl:
 		acc_value *= 1.02

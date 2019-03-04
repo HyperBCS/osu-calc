@@ -38,6 +38,9 @@ class Beatmap:
 				self.length = length
 
 		# Hit Object
+		# 1 = Circle
+		# 2 = Slider
+		# 3 = Spinner
 		self.objects = []
 		ho_num = 0
 		class hit_object:
