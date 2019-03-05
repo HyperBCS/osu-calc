@@ -1,5 +1,5 @@
 import math
-import sys
+import sys, traceback
 class Beatmap:
 	def __init__(self, file):
 		self.searchfile = file
@@ -148,12 +148,21 @@ class Beatmap:
 					# add first slider point
 					pos_s.append(pos)
 					# iterate line for the rest of the slider points
+					l_pos = None
 					for l_pos in sl_line:
 						pos_s.append([l_pos.split(":")[0],l_pos.split(":")[1].split(",")[0]])
 						if len(l_pos.split(",")) > 2:
 							break
-					repeats = float(l_pos.split(",")[1])
-					length = float(l_pos.split(",")[2])
+					if l_pos:
+						repeats = float(l_pos.split(",")[1])
+						length = float(l_pos.split(",")[2])
+					else:
+						self.num_circles += 1
+						h_type = 1
+						self.num_objects += 1
+						self.max_combo += 1
+						self.objects.append(hit_object(pos,time,h_type,end_time,slider))
+						return
 					#print "Repeats: "+repeats+" Length: "+length+" Points: "
 					#print pos_s
 					time_p = self.timing_points[0]

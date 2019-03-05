@@ -3,7 +3,7 @@ osu! calc is a performance point(PP) calculator for the game osu! This program o
 
 # Usage
 
-This program is written in python and requires version 2.7. There are several supported arguments.
+This program is written in python and requires version 3. There are several supported arguments.
 
 * -l `link` (Link to a .osu beatmap, for example https://osu.ppy.sh/osu/1262832)
 * -acc `% acc`
