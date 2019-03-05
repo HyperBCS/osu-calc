@@ -116,6 +116,7 @@ def set_mods(mod, m):
 			mod.td = 1
 
 if mod_s != "":
+	mod_s = mod_s.upper()
 	mod_s = [mod_s[i:i+2] for i in range(0, len(mod_s), 2)]
 	for m in mod_s:
 		set_mods(mod, m)
